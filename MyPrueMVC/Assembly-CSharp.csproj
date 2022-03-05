@@ -50,6 +50,7 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
+     <Compile Include="Assets\manager\NetMgr.cs" />
      <Compile Include="Assets\scripts\ApplicationFacade.cs" />
      <Compile Include="Assets\scripts\StartGame.cs" />
      <Compile Include="Assets\scripts\ctrl\DataCtrl.cs" />

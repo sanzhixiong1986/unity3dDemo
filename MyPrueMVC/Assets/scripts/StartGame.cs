@@ -19,22 +19,22 @@ public class StartGame : MonoBehaviour
             Debug.Log("Message Received from "+((WebSocket)sender).Url+", Data : "+e.Data);
         };
     }
-        private void Update()
+    private void Update()
+    {
+        if(ws == null)
         {
-            if(ws == null)
-            {
-                return;
-            }
+            return;
+        }
 
-            MyData myData = new MyData();
-            myData.Level = 1;
-            string json = JsonConvert.SerializeObject(myData);
+        MyData myData = new MyData();
+        myData.Level = 1;
+        string json = JsonConvert.SerializeObject(myData);
 
 
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                ws.Send(json);
-            }  
-        }   
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            ws.Send(json);
+        }  
+    }   
 }
 
