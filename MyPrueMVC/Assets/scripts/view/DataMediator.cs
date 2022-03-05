@@ -6,6 +6,8 @@ using UnityEngine.UI;
 using PureMVC.Interfaces;
 using PureMVC.Patterns.Mediator;
 
+using Newtonsoft.Json;
+
 public class DataMediator :Mediator{
 
     public new const string NAME = "dataMediator";
@@ -13,18 +15,31 @@ public class DataMediator :Mediator{
     //ui
     private Text Level_text;
     private Button AddLevel_btn;
+    private NetMgr _netMgr = null;
 
     public DataMediator(GameObject gameObject):base(NAME){
         Level_text = gameObject.transform.Find("Level_Text").GetComponent<Text>();
         AddLevel_btn = gameObject.transform.Find("Add_btn").GetComponent<Button>();
-
+        _netMgr = gameObject.GetComponent<NetMgr>();
         //发送事件
         AddLevel_btn.onClick.AddListener(onClickEvent);
     }
 
+    private string crateJson()
+    {
+        MyData myData = new MyData();
+        myData.Level = 2;
+        return JsonConvert.SerializeObject(myData);
+    }
+
     private void onClickEvent(){
-        Debug.Log("DataMediator clickEvent");
-        SendNotification("Reg_StartDataCommand");//发送事件
+        Debug.Log("DataMediator clickEvent"+_netMgr);
+        // SendNotification("Reg_StartDataCommand");//发送事件
+        if (_netMgr)
+        {
+            
+            _netMgr.send_data(this.crateJson());
+        }
     }
 
     //坚挺事件

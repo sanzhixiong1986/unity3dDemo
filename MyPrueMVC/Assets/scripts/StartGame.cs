@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using WebSocketSharp;
 
-using Newtonsoft.Json;
+
 
 public class StartGame : MonoBehaviour
 {
@@ -12,7 +12,6 @@ public class StartGame : MonoBehaviour
     void Start()
     {
         new ApplicationFacade(this.gameObject);
-        this.gameObject.AddComponent<NetMgr>();
     }
 }
 

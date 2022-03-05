@@ -52,6 +52,7 @@ public class NetMgr : MonoBehaviour
 
         this.ws.OnOpen += (sender, args) =>
         {
+            Debug.Log("与服务器链接");
             //链接刚打开的部分
             this.setState((int) State.Connected);
             //通知command接受到对应的信息
@@ -59,6 +60,7 @@ public class NetMgr : MonoBehaviour
 
         this.ws.OnClose += (sender, args) =>
         {
+            Debug.LogError("OnClose");
             //服务器关闭
             if (this.state == (int) State.Connected)
             {
@@ -74,6 +76,7 @@ public class NetMgr : MonoBehaviour
 
         this.ws.OnError += (sender, args) =>
         {
+            Debug.LogError("OnError");
             //出现错误的时候
             //服务器关闭
             if (this.state == (int) State.Connected)
@@ -92,11 +95,11 @@ public class NetMgr : MonoBehaviour
     //发送数据
     public void send_data(string json)
     {
-        if (this.state != (int) State.Disconnected)
+        if (this.state == (int) State.Disconnected)
         {
             return;
         }
-        
+        Debug.Log("发送数据"+json);
         this.ws.Send(json);
     }
 
