@@ -20,7 +20,7 @@ public class DataMediator :Mediator{
     public DataMediator(GameObject gameObject):base(NAME){
         Level_text = gameObject.transform.Find("Level_Text").GetComponent<Text>();
         AddLevel_btn = gameObject.transform.Find("Add_btn").GetComponent<Button>();
-        _netMgr = gameObject.GetComponent<NetMgr>();
+        _netMgr = GameObject.Find("net").GetComponent<NetMgr>();
         //发送事件
         AddLevel_btn.onClick.AddListener(onClickEvent);
     }
@@ -42,12 +42,14 @@ public class DataMediator :Mediator{
             myData.body = "helloworld";
             _netMgr.send_data(myData);
         }
+        
     }
 
     //坚挺事件
     public override string[] ListNotificationInterests(){
         List<string> listResults = new List<string>();
         listResults.Add("Msg_AddLevel");
+        
         return listResults.ToArray();
     }
 
@@ -56,7 +58,7 @@ public class DataMediator :Mediator{
         
         switch(notification.Name){
             case "Msg_AddLevel":
-            Debug.Log("Msg_AddLevel");
+            Debug.Log("Msg_AddLevel==============");
                 //Level_text.text = (notification.Body as MyData).Level.ToString();
             break;
         }

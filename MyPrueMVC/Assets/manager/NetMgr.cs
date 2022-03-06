@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.Android;
 using WebSocketSharp;
 
+
 enum State
 {
     Disconnected,   //断开
@@ -49,6 +50,7 @@ public class NetMgr : MonoBehaviour
         this.ws.OnMessage += (sender, e) =>
         {
             //收到数据的部分
+            Debug.Log(e.Data);
         };
 
         this.ws.OnOpen += (sender, args) =>
