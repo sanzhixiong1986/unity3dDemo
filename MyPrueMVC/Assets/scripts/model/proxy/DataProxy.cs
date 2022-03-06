@@ -14,7 +14,7 @@ public class DataProxy :Proxy{
     }
 
     public void AddLevel(int level){
-        _mydata.Level += level;
-        SendNotification("Msg_AddLevel",_mydata);
+        //_mydata.Level += level;
+        //SendNotification("Msg_AddLevel",_mydata);
     }
 }

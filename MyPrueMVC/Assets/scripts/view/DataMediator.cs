@@ -28,7 +28,6 @@ public class DataMediator :Mediator{
     private string crateJson()
     {
         MyData myData = new MyData();
-        myData.Level = 2;
         return JsonConvert.SerializeObject(myData);
     }
 
@@ -37,8 +36,11 @@ public class DataMediator :Mediator{
         // SendNotification("Reg_StartDataCommand");//发送事件
         if (_netMgr)
         {
-            
-            _netMgr.send_data(this.crateJson());
+            MyData myData = new MyData();
+            myData.stype = 1;
+            myData.ctype = 2;
+            myData.body = "helloworld";
+            _netMgr.send_data(myData);
         }
     }
 
@@ -55,7 +57,7 @@ public class DataMediator :Mediator{
         switch(notification.Name){
             case "Msg_AddLevel":
             Debug.Log("Msg_AddLevel");
-                Level_text.text = (notification.Body as MyData).Level.ToString();
+                //Level_text.text = (notification.Body as MyData).Level.ToString();
             break;
         }
     }

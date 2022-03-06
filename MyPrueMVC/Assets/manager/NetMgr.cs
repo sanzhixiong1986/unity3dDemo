@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using model.vo;
 using UnityEngine;
 using UnityEngine.Android;
 using WebSocketSharp;
@@ -93,13 +94,14 @@ public class NetMgr : MonoBehaviour
     }
 
     //发送数据
-    public void send_data(string json)
+    public void send_data(IData idata)
     {
         if (this.state == (int) State.Disconnected)
         {
             return;
         }
-        Debug.Log("发送数据"+json);
+
+        string json = proto_man.encode_cmd(idata,1);
         this.ws.Send(json);
     }
 
