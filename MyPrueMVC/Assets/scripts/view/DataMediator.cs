@@ -20,7 +20,7 @@ public class DataMediator :Mediator{
     public DataMediator(GameObject gameObject):base(NAME){
         Level_text = gameObject.transform.Find("Level_Text").GetComponent<Text>();
         AddLevel_btn = gameObject.transform.Find("Add_btn").GetComponent<Button>();
-        _netMgr = GameObject.Find("net").GetComponent<NetMgr>();
+        _netMgr = NetMgr.getInstace();
         //发送事件
         AddLevel_btn.onClick.AddListener(onClickEvent);
     }
@@ -34,7 +34,7 @@ public class DataMediator :Mediator{
     private void onClickEvent(){
         Debug.Log("DataMediator clickEvent"+_netMgr);
         // SendNotification("Reg_StartDataCommand");//发送事件
-        if (_netMgr)
+        if (_netMgr != null)
         {
             MyData myData = new MyData();
             myData.stype = 1;

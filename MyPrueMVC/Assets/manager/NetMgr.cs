@@ -5,6 +5,9 @@ using UnityEngine;
 using UnityEngine.Android;
 using WebSocketSharp;
 
+using PureMVC.Patterns.Facade;
+using PureMVC.Patterns.Mediator;
+
 
 enum State
 {
@@ -13,30 +16,34 @@ enum State
     Connected,      //链接成功
 }
 
-public class NetMgr : MonoBehaviour
+public class NetMgr : Mediator
 {
-    // Start is called before the first frame update
     private string url = "ws://127.0.0.1:6081";
     private int state = (int)State.Disconnected;
     private WebSocket ws = null;
-    public static NetMgr Instance = null;
+    private static NetMgr Instance = null;
+
+    public static NetMgr getInstace()
+    {
+        if (NetMgr.Instance == null)
+        {
+            NetMgr.Instance = new NetMgr();
+            return NetMgr.Instance;
+        }
+        return NetMgr.Instance;
+    }
+    public NetMgr() : base("NetMgr")
+    {
+        this.setState((int)State.Disconnected);
+    }
+    // Start is called before the first frame update
+    
 
     private void  setState(int state)
     {
         this.state = state;
     }
-    void Start()
-    {
-        if (NetMgr.Instance == null)
-        {
-            NetMgr.Instance = this;
-            return;
-        }
 
-        this.setState((int)State.Disconnected);
-    }
-
-    
     public void connet_to_server()
     {
         if (this.state != (int) State.Disconnected) {
@@ -51,6 +58,7 @@ public class NetMgr : MonoBehaviour
         {
             //收到数据的部分
             Debug.Log(e.Data);
+            this.SendNotification("Reg_StartDataCommand",e.Data);
         };
 
         this.ws.OnOpen += (sender, args) =>
@@ -105,16 +113,5 @@ public class NetMgr : MonoBehaviour
 
         string json = proto_man.encode_cmd(idata,1);
         this.ws.Send(json);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        //多链接
-        if (this.state != (int)State.Disconnected)
-        {
-            return;
-        }
-        this.connet_to_server();//做链接
     }
 }

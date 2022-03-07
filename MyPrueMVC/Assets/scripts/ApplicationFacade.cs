@@ -11,7 +11,16 @@ public class ApplicationFacade : Facade
         RegisterCommand("Reg_StartDataCommand",()=>{return new DataCtrl();});
         //试图注册
         RegisterMediator(new DataMediator(gameObject));
+        RegisterMediator(NetMgr.getInstace());
         //数据注册
         RegisterProxy(new DataProxy());
+
+        initNet();
+    }
+
+    //初始化网络
+    private void initNet()
+    {
+        NetMgr.getInstace().connet_to_server();
     }
 }
