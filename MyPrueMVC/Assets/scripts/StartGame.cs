@@ -12,6 +12,7 @@ public class StartGame : MonoBehaviour
     void Start()
     {
         new ApplicationFacade(this.gameObject);
+        NetMgr.getInstace().connet_to_server();
     }
 }
 

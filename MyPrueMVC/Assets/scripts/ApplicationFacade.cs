@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using model.proxy;
 using UnityEngine;
 
 using PureMVC.Patterns.Facade;
@@ -14,13 +15,8 @@ public class ApplicationFacade : Facade
         RegisterMediator(NetMgr.getInstace());
         //数据注册
         RegisterProxy(new DataProxy());
+        //聊天的数据处理
+        RegisterProxy(new RoomProxy());
 
-        initNet();
-    }
-
-    //初始化网络
-    private void initNet()
-    {
-        NetMgr.getInstace().connet_to_server();
     }
 }

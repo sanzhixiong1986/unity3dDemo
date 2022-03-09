@@ -1,9 +1,11 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using model.vo;
 using UnityEngine;
 using UnityEngine.Android;
-using WebSocketSharp;
+using BestHTTP;
+using BestHTTP.WebSocket;
 
 using PureMVC.Patterns.Facade;
 using PureMVC.Patterns.Mediator;
@@ -18,7 +20,7 @@ enum State
 
 public class NetMgr : Mediator
 {
-    private string url = "ws://127.0.0.1:6081";
+    private string url = "ws://127.0.0.1:6081/ws";
     private int state = (int)State.Disconnected;
     private WebSocket ws = null;
     private static NetMgr Instance = null;
@@ -46,22 +48,27 @@ public class NetMgr : Mediator
 
     public void connet_to_server()
     {
+        Debug.Log("链接成功");
         if (this.state != (int) State.Disconnected) {
             return;
         }
         
         this.setState((int)State.Connecting);
-        this.ws = new WebSocket(url);
-        this.ws.Connect();
+        this.ws = new WebSocket(new Uri(url));
+        this.ws.Open();
+
 
         this.ws.OnMessage += (sender, e) =>
         {
-            //收到数据的部分
-            Debug.Log(e.Data);
-            this.SendNotification("Reg_StartDataCommand",e.Data);
+            
+            Debug.Log(e);
+            if (e != "1")
+            {
+                this.SendNotification("Reg_StartDataCommand",e);
+            }
         };
 
-        this.ws.OnOpen += (sender, args) =>
+        this.ws.OnOpen += (sender) =>
         {
             Debug.Log("与服务器链接");
             //链接刚打开的部分
@@ -69,7 +76,7 @@ public class NetMgr : Mediator
             //通知command接受到对应的信息
         };
 
-        this.ws.OnClose += (sender, args) =>
+        this.ws.OnClosed += (WebSocket ws, UInt16 code, string message) =>
         {
             Debug.LogError("OnClose");
             //服务器关闭

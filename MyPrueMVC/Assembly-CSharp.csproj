@@ -56,8 +56,12 @@
      <Compile Include="Assets\scripts\StartGame.cs" />
      <Compile Include="Assets\scripts\ctrl\DataCtrl.cs" />
      <Compile Include="Assets\scripts\model\proxy\DataProxy.cs" />
+     <Compile Include="Assets\scripts\model\proxy\RoomProxy.cs" />
+     <Compile Include="Assets\scripts\model\vo\Human.cs" />
      <Compile Include="Assets\scripts\model\vo\IData.cs" />
      <Compile Include="Assets\scripts\model\vo\MyData.cs" />
+     <Compile Include="Assets\scripts\model\vo\ResponseVo.cs" />
+     <Compile Include="Assets\scripts\model\vo\RoomEnter.cs" />
      <Compile Include="Assets\scripts\pmvcFromwork\Core\Controller.cs" />
      <Compile Include="Assets\scripts\pmvcFromwork\Core\Model.cs" />
      <Compile Include="Assets\scripts\pmvcFromwork\Core\View.cs" />
@@ -644,6 +648,12 @@
  <Reference Include="mscorlib">
  <HintPath>/Users/joy/Documents/unity3d/2019.4.36f1/Unity.app/Contents/NetStandard/compat/2.0.0/shims/netfx/mscorlib.dll</HintPath>
  </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="BestHTTP.csproj">
+      <Project>{98ad3d82-4ec3-2245-238f-5ab972d3642f}</Project>
+      <Name>BestHTTP</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

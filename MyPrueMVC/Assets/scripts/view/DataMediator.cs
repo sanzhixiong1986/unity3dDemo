@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using model.vo;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -33,14 +34,16 @@ public class DataMediator :Mediator{
 
     private void onClickEvent(){
         Debug.Log("DataMediator clickEvent"+_netMgr);
-        // SendNotification("Reg_StartDataCommand");//发送事件
+        
         if (_netMgr != null)
         {
-            MyData myData = new MyData();
-            myData.stype = 1;
-            myData.ctype = 2;
-            myData.body = "helloworld";
-            _netMgr.send_data(myData);
+            RoomEnter idata = new RoomEnter();
+            idata.stype = 1;
+            idata.ctype = 1;
+            idata.body = new Human();
+            idata.body.uname = "sanzhixiong";
+            idata.body.usex = 0;
+            _netMgr.send_data(idata);
         }
         
     }
@@ -58,8 +61,10 @@ public class DataMediator :Mediator{
         
         switch(notification.Name){
             case "Msg_AddLevel":
-            Debug.Log("Msg_AddLevel==============");
-                //Level_text.text = (notification.Body as MyData).Level.ToString();
+            Debug.Log("Msg_AddLevel=============="+notification.Body);
+            
+                Level_text.text = "进入房间成功 ";
+            //Level_text.text = (notification.Body as MyData).Level.ToString();
             break;
         }
     }

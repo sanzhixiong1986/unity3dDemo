@@ -30,11 +30,9 @@ public class proto_man
         return JsonConvert.SerializeObject(data);
     }
 
-    static IData json_decode(string json)
+    static ResponseVo json_decode(string json)
     {
-        IData data = null;
-        data = JsonConvert.DeserializeObject<IData>(json);
-        return data;
+        return (ResponseVo)JsonConvert.DeserializeObject<ResponseVo>(json);
     }
 
     static public string encode_cmd(IData idata,int proto_type)
@@ -49,10 +47,14 @@ public class proto_man
     }
     
     //揭开
-    static public IData decode_cmd(int proto_type ,string json)
+    static public ResponseVo decode_cmd(int proto_type ,string json)
     {
         if (proto_type == (int) proto_man.MyEnum.PROTO_JSON)
         {
+            if (json == null)
+            {
+                Debug.LogError("decode_cmd is json idata is error");
+            }
             return json_decode(json);
         }
 
