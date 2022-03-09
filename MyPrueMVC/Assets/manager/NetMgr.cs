@@ -18,7 +18,7 @@ enum State
     Connected,      //链接成功
 }
 
-public class NetMgr : Mediator
+public class NetMgr : Facade
 {
     private string url = "ws://127.0.0.1:6081/ws";
     private int state = (int)State.Disconnected;

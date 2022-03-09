@@ -17,13 +17,16 @@ public class DataMediator :Mediator{
     private Text Level_text;
     private Button AddLevel_btn;
     private NetMgr _netMgr = null;
+    private Button btn_exit;
 
     public DataMediator(GameObject gameObject):base(NAME){
         Level_text = gameObject.transform.Find("Level_Text").GetComponent<Text>();
         AddLevel_btn = gameObject.transform.Find("Add_btn").GetComponent<Button>();
+        btn_exit = gameObject.transform.Find("Add_exit").GetComponent<Button>();
         _netMgr = NetMgr.getInstace();
         //发送事件
         AddLevel_btn.onClick.AddListener(onClickEvent);
+        btn_exit.onClick.AddListener(onExit);
     }
 
     private string crateJson()
@@ -46,6 +49,15 @@ public class DataMediator :Mediator{
             _netMgr.send_data(idata);
         }
         
+    }
+
+    private void onExit()
+    {
+        RoomEnter idata = new RoomEnter();
+        idata.stype = 1;
+        idata.ctype = 2;
+        idata.body = null;
+        _netMgr.send_data(idata);
     }
 
     //坚挺事件
